@@ -1,15 +1,29 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: "en" }}">
-  {%- include head.html -%}
-  <body a="{{ site.theme_config.appearance | default: "auto" }}">
-    <main class="page-content" aria-label="Content">
-      <div class="w">
-        {{ content }}
-      </div>
-    </main>
+<html lang="en">
 
-    {% if site.goat_counter and jekyll.environment == "production" %}
-      {% include goat_counter.html %}
-    {% endif %}
-  </body>
+{% include head.html %}
+
+<body>
+
+  {% if site.data.settings.google-analytics %}
+  {% include google-analytics.html %}
+  {% endif %}
+
+  {% include header.html %}
+
+  <!-- begin content -->
+  <main class="content" aria-label="Content">
+    {{ content }}
+  </main>
+  <!-- end content -->
+
+  <div class="top ion ion-ios-arrow-up" title="Top"></div>
+
+  {% include search.html %}
+
+  {% include footer.html %}
+
+  {% include javascripts.html %}
+</body>
+
 </html>

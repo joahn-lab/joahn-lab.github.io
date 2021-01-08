@@ -1,28 +1,37 @@
-title: no style, please! # name of the site
-author: Riccardo Graziosi # name of site's author
-email: riccardo.graziosi97@gmail.com # email of site's author
+baseurl: "/zolan" # the subpath of your site, e.g. /blog
 url: "https://joahn-lab.github.io" # root address of the site
-baseurl: "/no-style-please" # subpath of the site, e.g. "/blog"
-description: > # description of the site (multiple lines allowed)
-  A (nearly) no-CSS, fast, minimalist Jekyll theme.
 
-permalink: /:slug.html
 
-favicon: "logo.png" # name+extension of favicon (which must be put on the root folder)
-# goat_counter: "yoursitename" # put your GoatCounter name if you want to use GoatCounter analytics
+# Build settings
+markdown: kramdown
+permalink: pretty
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll/tagging
 
-remote_theme: riggraz/no-style-please
+paginate: 5
+paginate_path: "/page/:num"
 
-theme_config:
-  appearance: "auto" # can be "light", "dark" or "auto"
-  back_home_text: ".." # customize text for homepage link in post layout
-  date_format: "%Y-%m-%d" # customize how date is formatted
-  show_description: false # show blog description in home page
+
+# Pages Path
+defaults:
+  - scope:
+      path: '_pages'
+    values:
+      permalink: /:basename:output_ext
+
+include:
+  - _pages
+
+
+# Tags
+tag_page_dir:         tag
+tag_page_layout:      tag_page
+tag_permalink_style:  pretty
 
 sass:
-  style: :compressed
-
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-
+  sass_dir: _sass
+  style: compressed
+  
+remote_theme: artemsheludko/zolan
