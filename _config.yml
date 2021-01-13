@@ -4,6 +4,10 @@ url: "https://joahn-lab.github.io" # root address of the site
 
 # Build settings
 markdown: kramdown
+highligher: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
 permalink: pretty
 plugins:
   - jekyll-paginate

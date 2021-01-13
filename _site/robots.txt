@@ -1,1 +1,1 @@
-Sitemap: https://joahn-lab.github.io/zolan/sitemap.xml
+Sitemap: https://joahn-lab.github.io/home/sitemap.xml

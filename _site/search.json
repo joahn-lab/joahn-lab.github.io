@@ -1,18 +1,26 @@
 [
   
     {
-      "title"    : "(sklearn) linear regression prediction modelling",
+      "title"    : "CMIT/MIT 성분의 흡입시 유해성과 폐질환의 인과성 입증 부족?",
       "category" : "",
-      "tags"     : "Style",
-      "url"      : "/zolan/2020/01/08/sklearn-1-%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%98%88%EC%B8%A1-%EB%AA%A8%EB%8D%B8%EB%A7%81/",
-      "date"     : "8 Jan, 2020"
+      "tags"     : "Life",
+      "url"      : "/home/2021/01/12/cmit-mit-toxic-chemicals/",
+      "date"     : "12 Jan, 2021"
+    } ,
+  
+    {
+      "title"    : "(sklearn) Linear Regression Prediction Modelling Part 1",
+      "category" : "",
+      "tags"     : "ML/DL",
+      "url"      : "/home/2021/01/09/sklearn-1-linear-regression-prediction-modelling-part1/",
+      "date"     : "9 Jan, 2021"
     } ,
   
     {
       "title"    : "Find a connection with the reader",
       "category" : "",
       "tags"     : "Resources",
-      "url"      : "/zolan/2018/07/24/find-a-connection-with-the-reader/",
+      "url"      : "/home/2018/07/24/find-a-connection-with-the-reader/",
       "date"     : "24 Jul, 2018"
     } ,
   
@@ -20,7 +28,7 @@
       "title"    : "Why a brand is often important",
       "category" : "",
       "tags"     : "Style",
-      "url"      : "/zolan/2018/07/19/why-a-brand-is-often-important/",
+      "url"      : "/home/2018/07/19/why-a-brand-is-often-important/",
       "date"     : "19 Jul, 2018"
     } ,
   
@@ -28,7 +36,7 @@
       "title"    : "Time to give gifts to everyone",
       "category" : "",
       "tags"     : "Life",
-      "url"      : "/zolan/2018/07/17/time-to-givegifts-to-everyone/",
+      "url"      : "/home/2018/07/17/time-to-givegifts-to-everyone/",
       "date"     : "17 Jul, 2018"
     } ,
   
@@ -36,7 +44,7 @@
       "title"    : "Moving to a new place",
       "category" : "",
       "tags"     : "Home",
-      "url"      : "/zolan/2018/07/05/moving-to-a-new-place/",
+      "url"      : "/home/2018/07/05/moving-to-a-new-place/",
       "date"     : "5 Jul, 2018"
     } ,
   
@@ -44,7 +52,7 @@
       "title"    : "Start the day with the right habit",
       "category" : "",
       "tags"     : "Style",
-      "url"      : "/zolan/2018/06/25/start-the-day-with-the-right-habit/",
+      "url"      : "/home/2018/06/25/start-the-day-with-the-right-habit/",
       "date"     : "25 Jun, 2018"
     } ,
   
@@ -52,7 +60,7 @@
       "title"    : "Welcome to Jekyll!",
       "category" : "",
       "tags"     : "Jekyll",
-      "url"      : "/zolan/2018/05/30/welcome-to-jekyll/",
+      "url"      : "/home/2018/05/30/welcome-to-jekyll/",
       "date"     : "30 May, 2018"
     } 
   

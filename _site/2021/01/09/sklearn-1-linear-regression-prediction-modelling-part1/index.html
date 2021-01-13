@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>(sklearn) linear regression prediction modelling</title>
+  <title>(sklearn) Linear Regression Prediction Modelling Part 1</title>
   <meta name='description' content='Zolan is modern minimal theme for Jekyll'>
 
-  <link rel="canonical" href="https://joahn-lab.github.io/zolan/2020/01/08/sklearn-1-%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%98%88%EC%B8%A1-%EB%AA%A8%EB%8D%B8%EB%A7%81/">
-  <link rel="alternate" type="application/rss+xml" title="" href="/zolan/feed.xml">
+  <link rel="canonical" href="https://joahn-lab.github.io/home/2021/01/09/sklearn-1-linear-regression-prediction-modelling-part1/">
+  <link rel="alternate" type="application/rss+xml" title="" href="/home/feed.xml">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
@@ -24,6 +24,31 @@
   </style>
 </head>
 
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$'] ],
+    processEscapes: true,
+  }
+});
+MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+    
 <body>
 
   
@@ -35,9 +60,9 @@
       <header class="header">
 
         <div class="logo">
-          <a class="logo__link" href="/zolan/">
+          <a class="logo__link" href="/home/">
           
-            <img class="logo__image" src="/zolan/images/seoseoul.png" alt="Joahn">
+            <img class="logo__image" src="/home/images/seoseoul.png" alt="Joahn">
           
           </a>
         </div>
@@ -53,7 +78,7 @@
 
             <ul class="nav__list list-reset">
               <li class="nav__item">
-                <a href="/zolan/" class="nav__link">Home</a>
+                <a href="/home/" class="nav__link">Home</a>
               </li>
               
                 
@@ -61,7 +86,7 @@
                 
               
               <li class="nav__item">
-                <a href="/zolan/about/" class="nav__link">About</a>
+                <a href="/home/about/" class="nav__link">About</a>
               </li>
               
                 
@@ -77,8 +102,12 @@
                 
               
               <li class="nav__item">
-                <a href="/zolan/styleguide/" class="nav__link">Style Guide</a>
+                <a href="/home/styleguide/" class="nav__link">Style Guide</a>
               </li>
+              
+                
+              
+                
               
                 
               
@@ -138,21 +167,21 @@
     <div class="row">
       <div class="col col-10 push-2 col-11 push-t-1 col-m-12 push-m-0">
         <span class="post__date">
-          <time datetime="2020-01-08T18:29:00+09:00">Jan 08, 2020</time>
+          <time datetime="2021-01-09T01:01:35+09:00">Jan 09, 2021</time>
         </span>
 
-        <h1 class="post-title">(sklearn) linear regression prediction modelling</h1>
+        <h1 class="post-title">(sklearn) Linear Regression Prediction Modelling Part 1</h1>
 
         <div class="post__info">
           <div class="post__author">
             <span>By</span>
-            <a href="/zolan/about/" class="author-name">Byeongjun Cho</a>
+            <a href="/home/about/" class="author-name">Byeongjun Cho</a>
           </div>
 
           
           <div class="post__tags">
             
-              <a href="/zolan/tag/Style" class="post__tags-tag">Style</a>
+              <a href="/home/tag/ML/DL" class="post__tags-tag">ML/DL</a>
             
           </div>
           
@@ -163,7 +192,9 @@
 
   
   
-    
+    <div class="post__head">
+      <div class="post-image" style="background-image: url(/home/images/Normdist_regression.png)"></div>
+    </div>
   
 
   </div>
@@ -172,106 +203,19 @@
   <div class="container">
   <div class="row">
     <!-- begin post -->
-    <article class="post post-no-image col col-8 col-t-10 col-m-12">
+    <article class="post  col col-8 col-t-10 col-m-12">
 
       <div class="post__content">
-        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
-</code></pre></div></div>
+        <p>‘단순 선형회귀’ 모형은 지도학습에서 가장 기초적으로 사용되는 수학적 모형 중 하나이다. 이때 <strong>지도학습</strong>이란, ‘종속변수와 독립변수에 대한 정보가 있는 데이터를 학습하여, 해당 학습 데이터를 가장 잘 설명하는 모형의 parameter 값을 찾고, 그 parameter 값을 이용해 종속변수 값을 예측 및 분류하는 작업을 하는’ 기계학습 방식을 일컫는다. 이때 종속변수의 값을 예측할지 분류할지, 즉 예측 및 분류 문제의 구분은 ‘종속변수의 속성’에 따라 결정된다. 즉 알고리즘이 해결해야 할 문제는 (예측하려는) 종속변수가 연속형 변수(수치형 자료)인 경우 ‘예측 문제’, 이산형 변수(명목형 자료)인 경우 ‘분류 문제’로 한정되는 것이다.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'data/training_test_data.csv'</span><span class="p">)</span>
-</code></pre></div></div>
+<h3 id="선형-회귀-수식">선형 회귀 수식</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
-</code></pre></div></div>
+<p>$y’ = b_0 + b_1X_1 + b_2X_2$<br />
+<em>$(y’$는 종속변수(예측변수) $Y$의 실제 추정치)</em></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data_np</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">values</span>
-</code></pre></div></div>
+<p>선형 회귀 모형식은 y절편(이하 편향치)인 $b_0$와 독립변수 항들로 구성되며, 독립변수가 늘어날 때(i번째 변수가 추가할 때) $b_iX_i$가 더해지는 식으로 확장된다. 이때 parameter(혹은 가중치)인 $b_i$는 $X_i$(독립변수)가 $y$(종속변수)에 미치는 영향을 나타내며, 독립변수 항들의 총합이자 종속변수의 예측치인 y는 연속형 변수(수치형 자료)이다. 따라서 ‘단순 선형회귀’ 모형은 ‘예측 문제’를 해결하기 위한 지도학습 알고리즘인 것이다.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">data_np</span><span class="p">)</span> <span class="c1">#데이터를 random하게 다시 섞기
-</span></code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 종속변수와 독립변수 데이터 분리하기
-</span><span class="n">y</span> <span class="o">=</span> <span class="n">data_np</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data_np</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_train</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_test</span><span class="p">.</span><span class="n">shape</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_test</span>
-</code></pre></div></div>
-
-<h2 id="feature-scaling">Feature scaling</h2>
-
-<h3 id="standardization">standardization</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_train_std</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span> <span class="c1"># 독립변수만 scaling
-</span><span class="n">X_test_std</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="c1"># 독립변수만 scaling
-</span></code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_train_std</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_test_std</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="n">model_std</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model_std1</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">(</span><span class="n">fit_intercept</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model_std</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_std</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model_std</span><span class="p">.</span><span class="n">coef_</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model_std</span><span class="p">.</span><span class="n">intercept_</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model_std</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_std</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model_std1</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_std</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model_std1</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_std</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-</code></pre></div></div>
-
-<h3 id="min-max-scaling">min-max scaling</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
-<span class="n">scaler_minmax</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
-<span class="n">X_train_minmax</span> <span class="o">=</span> <span class="n">scaler_minmax</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
-<span class="n">X_test_minmax</span> <span class="o">=</span> <span class="n">scaler_minmax</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_test_minmax</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model_minmax</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model_minmax</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_minmax</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model_minmax</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_minmax</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-</code></pre></div></div>
+<p>(작성중)</p>
 
       </div>
 
@@ -279,24 +223,24 @@
         <span class="share__title">Share this article:</span>
         <ul class="share__list list-reset">
           <li class="share__item">
-            <a class="share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://joahn-lab.github.io/zolan/2020/01/08/sklearn-1-%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%98%88%EC%B8%A1-%EB%AA%A8%EB%8D%B8%EB%A7%81/"
+            <a class="share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://joahn-lab.github.io/home/2021/01/09/sklearn-1-linear-regression-prediction-modelling-part1/"
               onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
               title="Share on Facebook" rel="nofollow"><i class="ion ion-logo-facebook"></i></a>
           </li>
 
           <li class="share__item">
-            <a class="share__twitter" href="https://twitter.com/intent/tweet?text=(sklearn)%20linear%20regression%20prediction%20modelling&url=https://joahn-lab.github.io/zolan/2020/01/08/sklearn-1-%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%98%88%EC%B8%A1-%EB%AA%A8%EB%8D%B8%EB%A7%81/"
+            <a class="share__twitter" href="https://twitter.com/intent/tweet?text=(sklearn)%20Linear%20Regression%20Prediction%20Modelling%20Part%201&url=https://joahn-lab.github.io/home/2021/01/09/sklearn-1-linear-regression-prediction-modelling-part1/"
               onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
               title="Share on Twitter" rel="nofollow"><i class="ion ion-logo-twitter"></i></a>
           </li>
 
           <li class="share__item">
-            <a class="share__linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://joahn-lab.github.io/zolan/2020/01/08/sklearn-1-%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%98%88%EC%B8%A1-%EB%AA%A8%EB%8D%B8%EB%A7%81/&title=(sklearn)%20linear%20regression%20prediction%20modelling&summary=&source="
+            <a class="share__linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://joahn-lab.github.io/home/2021/01/09/sklearn-1-linear-regression-prediction-modelling-part1/&title=(sklearn)%20Linear%20Regression%20Prediction%20Modelling%20Part%201&summary=&source="
               onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn" rel="nofollow"><i class="ion ion-logo-linkedin"></i></a>
           </li>
 
           <li class="share__item">
-            <a class="share__pinterest" href="http://pinterest.com/pin/create/button/?url=https://joahn-lab.github.io/2020/01/08/sklearn-1-%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%98%88%EC%B8%A1-%EB%AA%A8%EB%8D%B8%EB%A7%81/&amp;media=https://joahn-lab.github.io/zolan/images/&amp;description=(sklearn)%20linear%20regression%20prediction%20modelling"
+            <a class="share__pinterest" href="http://pinterest.com/pin/create/button/?url=https://joahn-lab.github.io/2021/01/09/sklearn-1-linear-regression-prediction-modelling-part1/&amp;media=https://joahn-lab.github.io/home/images/Normdist_regression.png&amp;description=(sklearn)%20Linear%20Regression%20Prediction%20Modelling%20Part%201"
               onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Pinterest"
               rel="nofollow"><i class="ion ion-logo-pinterest"></i></a>
           </li>
@@ -311,10 +255,10 @@
   <div class="post__navigation">
     
     <div class="prev">
-      <a class="post__nav__image" href="/zolan/2018/07/24/find-a-connection-with-the-reader/" style="background-image: url(/zolan/images/02.jpg)"></a>
+      <a class="post__nav__image" href="/home/2018/07/24/find-a-connection-with-the-reader/" style="background-image: url(/home/images/02.jpg)"></a>
       <h2 class="post__nav__title">
         <i class="ion ion-md-arrow-back"></i>
-        <a href="/zolan/2018/07/24/find-a-connection-with-the-reader/">Find a connection with the reader</a>
+        <a href="/home/2018/07/24/find-a-connection-with-the-reader/">Find a connection with the reader</a>
       </h2>
       <p class="prev__excerpt">
         
@@ -324,6 +268,24 @@
     </div>
     
 
+    
+    <div class="next">
+      <a class="post__nav__image" href="/home/2021/01/12/cmit-mit-toxic-chemicals/" style="background-image: url(/home/images/gaseup.jpg)">
+      </a>
+      <h2 class="post__nav__title">
+        <a href="/home/2021/01/12/cmit-mit-toxic-chemicals/">CMIT/MIT 성분의 흡입시 유해성과 폐질환의 인과성 입증 부족?</a>
+        <i class="ion ion-md-arrow-forward"></i>
+      </h2>
+      <p class="next__excerpt">
+        
+          
+*조사과제브리핑 5 가습기살균제 원료물질 CMIT/MIT 안전성 시험 책임 규명 (출처: 사회적참사 특별조사위원회)*
+
+
+어제 서울중앙지법은 살균소독물질인 CMIT/MIT 성분이 포함된 원료...
+        
+      </p>
+    </div>
     
   </div>
 
@@ -410,22 +372,22 @@
 <!-- end footer -->
 
 
-  <script src="/zolan/js/vendors/jquery-3.3.1.min.js"></script>
-<script src="/zolan/js/vendors/simple-jekyll-search.min.js"></script>
+  <script src="/home/js/vendors/jquery-3.3.1.min.js"></script>
+<script src="/home/js/vendors/simple-jekyll-search.min.js"></script>
 <script>
   SimpleJekyllSearch({
     searchInput: document.getElementById("js-search-input"),
     resultsContainer: document.getElementById("js-results-container"),
-    json: "/zolan/search.json",
+    json: "/home/search.json",
     searchResultTemplate: '<li class="search-results__item"><a class="search-results__link" href="{url}">{title}</a><br> <span class="search-results__date">{date}</span></li>',
     noResultsText: '<li class="no-results">No results found</li>'
   });
 </script>
-<script src="/zolan/js/vendors/transition.js"></script>
-<script src="/zolan/js/vendors/zoom.min.js"></script>
-<script src="/zolan/js/vendors/instafeed.min.js"></script>
-<script src="/zolan/js/vendors/jquery.fitvids.js"></script>
-<script src="/zolan/js/common.js"></script>
+<script src="/home/js/vendors/transition.js"></script>
+<script src="/home/js/vendors/zoom.min.js"></script>
+<script src="/home/js/vendors/instafeed.min.js"></script>
+<script src="/home/js/vendors/jquery.fitvids.js"></script>
+<script src="/home/js/common.js"></script>
 </body>
 
 </html>
