@@ -7,7 +7,8 @@ use_math: true
 tags:   Life
 ---
 
-<iframe width="796" height="448" src="https://www.youtube.com/embed/mCc4j9pPj0s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/mCc4j9pPj0s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 *조사과제브리핑 5 가습기살균제 원료물질 CMIT/MIT 안전성 시험 책임 규명 (출처: 사회적참사 특별조사위원회)*
 
 <br>
